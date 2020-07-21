@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>weather app</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <style type="text/css">
+   body{
+      background-image: linear-gradient(#007bff,#20c997);
+      background-repeat: no-repeat;
+      height: 100vh;
+    color: #fff;
+    }
+  </style>
+</head>
+<body>
+  
+	<div  class="container">
+
+    <h2 class="text-center mt-3 ">WEATHER APP</h2> 
+    <br>
+
+    <h4 id="rr" style="display: none;text-align: center;"></h4>
+    <div style="width: 70%; margin: 10px auto;" >
+   
+     <div class="row text-center">
+     <h3 class="col-12 col-sm-6 text-center" id="text"></h3>
+     <div  class="col-12 col-sm-6" style="widows: 60px;height: 50px;">
+     <img style="width: 30%;height: 100%;visibility: hidden;color: white" id="logo"></img></div>
+     </div><br><br>
+     <h1 class="text-center" id="deg"></h1><br>
+     <h5 class="text-center" id="des"></h5><br>
+     <h5 class="text-center" id="coun"></h5>
+</div>
+   </div>
+ 
+
+  <script type="text/javascript">
+    var app=document.getElementById("app");
+    var text=document.getElementById("text");
+    var deg=document.getElementById("deg");
+    var des=document.getElementById("des");
+    var logo=document.getElementById("logo");
+    var coun=document.getElementById("coun")
+
+    console.log(navigator.geolocation);
+    var jagan=navigator.geolocation.getCurrentPosition(jagan,showerror);
+
+
+    function jagan(jagan){
+      long=jagan.coords.longitude;
+      lat=jagan.coords.latitude;
+      g="ad8406b1aad2783474e75bd553b58bfd";
+      //console.log(long,lat);
+
+      
+      var url=`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${g}`;
+
+      fetch(url)
+      .then((res)=> {return res.json()})
+      .then((res)=>{
+        console.log(res);
+        deg.innerHTML= Math.round(res.main.temp-270)+"°C";
+        des.innerHTML="Description : "+res.weather[0].description;
+        text.innerHTML=res.name;
+        logo.style.visibility="unset";
+        logo.src="icons/"+res.weather[0].icon+".png";
+        coun.innerHTML="country code : "+res.sys.country;
+      })
+    }
+
+
+    function showerror(error){
+      document.getElementById("rr").innerHTML=`<p class="alert alert-danger">${error.message}</p>`;
+      document.getElementById("rr").style.display="block";
+
+    }
+  </script>
+</body>
+</html>
