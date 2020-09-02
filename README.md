@@ -1,2 +1,5 @@
 # weather-app
-In this you can weather details of your own location . by using API and javascript.
+A website which shows your current location weather.
+# Languages 
+It uses Html, Css, Javascript.
+Mainly I get data from an api.
